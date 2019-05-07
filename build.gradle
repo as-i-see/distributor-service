@@ -1,0 +1,77 @@
+plugins {
+    id 'idea'
+    id 'war'
+    //id "org.gretty" version "2.3.1"
+    id 'org.liquibase.gradle' version '2.0.1'
+    id 'com.bmuschko.cargo' version '2.6.1'
+}
+
+
+group 'dev.asisee'
+version '1.0'
+
+repositories {
+    jcenter()
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'javax.servlet:jstl:1.2'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.4.0'
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.4.0")
+    testCompileOnly 'junit:junit:4.12'
+    testRuntimeOnly("org.junit.vintage:junit-vintage-engine:5.4.0")
+
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.11.2'
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.11.2'
+
+    implementation group: 'org.apache.commons', name: 'commons-dbcp2', version: '2.6.0'
+    testImplementation group: 'com.h2database', name: 'h2', version: '1.4.199'
+
+
+    implementation 'com.bmuschko:gradle-cargo-plugin:2.6.1'
+    compile group: 'org.apache.tomcat', name: 'tomcat-servlet-api', version: '9.0.19'
+    
+    liquibaseRuntime 'org.liquibase:liquibase-gradle-plugin:2.0.1'
+    liquibaseRuntime group: 'org.yaml', name: 'snakeyaml', version: '1.24'
+    liquibaseRuntime 'org.liquibase:liquibase-core:3.6.3'
+    liquibaseRuntime 'org.liquibase:liquibase-groovy-dsl:2.0.3'
+    liquibaseRuntime group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '2.4.1'
+    implementation group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '2.4.1'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+war {
+    archiveFileName = 'shop.war'
+}
+
+liquibase {
+    mainClassName 'org.liquibase.gradle.OutputEnablingLiquibaseRunner'
+    activities {
+        main {
+            changeLogFile 'changelog.yml'
+            url 'jdbc:mariadb://localhost:3306/shop'
+            username 'root'
+            password '132123'
+        }
+    }
+    runList = 'main'
+
+}
+
+cargo {
+    containerId = 'tomcat9x'
+    deployable {
+        context = 'shop'
+    }
+    local {
+        installer {
+            installUrl = 'http://apache.ip-connect.vn.ua/tomcat/tomcat-9/v9.0.19/bin/apache-tomcat-9.0.19.zip'
+            downloadDir = file("$buildDir/download")
+            extractDir = file("$buildDir/extract")
+        }
+    }
+}

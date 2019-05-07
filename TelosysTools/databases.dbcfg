@@ -1,0 +1,39 @@
+<!-- ============================================ -->
+<!--        TELOSYS DATABASES CONFIGURATION       -->
+<!-- ============================================ -->
+<!--
+ "databases" tag attributes :
+    . maxId       : maximum database id (0 to 100, default = 10)
+    . defaultId   : default database to use when no ID is specified ( 0 to maxId ), default : 0
+ "db" tag attributes :
+	. id       : the database id ( from 0 to maxId )
+	. name     : the symbolic name ( anything )
+	. driver   : the JDBC driver class name
+	. url      : the JDBC URL for connection
+	. typeName : the database type name ( eg "DERBY", "H2", "MYSQL", "ORACLE", etc ) 
+	. dialect  : the JPA dialect (usefull only for JPA) 
+	. isolationLevel : JDBC values ( see Java Constants in "java.sql.Connection" )
+	. poolSize       : the initial size of the pool for this database 
+ "metadata" tag attributes :
+    . catalog            : the catalog where to search the metadata ( "!" means "null" ) 
+    . schema             : the schema  where to search the metadata ( "!" means "null" )
+    . table-name-pattern : the pattern used as table name filter ( ex : "%", "A%", ... ) 
+    . table-types        : the types to retrieve, separated by blanks ( ex : "TABLE", "TABLE VIEW", ... ) 
+    . table-name-exclude : the pattern used to exclude tables
+    . table-name-include : the pattern used to include tables
+-->
+
+<databases>
+    <db id = "0"
+        name = "shop"
+        driver = "org.mariadb.jdbc.Driver"
+        url = "jdbc:mariadb://localhost:3306/shop"
+        poolSize = "3">
+            <property name="user" value="root" />
+            <property name="password" value="132123" />
+            <metadata catalog="!"  schema="!"
+				table-name-pattern="%" table-types="TABLE VIEW"
+		        table-name-exclude=""  table-name-include=""  />
+
+    </db>
+</databases>

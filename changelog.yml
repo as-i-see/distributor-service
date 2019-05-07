@@ -1,0 +1,268 @@
+databaseChangeLog:
+- changeSet:
+    id: 1557000272095-1
+    author: dism3mb3r (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              primaryKey: true
+            name: id
+            type: INT UNSIGNED
+        - column:
+            constraints:
+              nullable: false
+            name: title
+            type: TINYTEXT
+        tableName: category
+- changeSet:
+    id: 1557000272095-2
+    author: dism3mb3r (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              primaryKey: true
+            name: id
+            type: INT UNSIGNED
+        - column:
+            constraints:
+              nullable: false
+            name: user
+            type: INT UNSIGNED
+        - column:
+            constraints:
+              nullable: false
+            name: payment
+            type: BIGINT UNSIGNED
+        - column:
+            constraints:
+              nullable: false
+            name: paid
+            type: TINYINT(3)
+        tableName: invoice
+- changeSet:
+    id: 1557000272095-3
+    author: dism3mb3r (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              primaryKey: true
+            name: id
+            type: INT UNSIGNED
+        - column:
+            constraints:
+              nullable: false
+            name: category
+            type: INT UNSIGNED
+        - column:
+            constraints:
+              nullable: false
+            name: title
+            type: TINYTEXT
+        - column:
+            constraints:
+              nullable: false
+            name: price
+            type: INT UNSIGNED
+        tableName: periodical
+- changeSet:
+    id: 1557000272095-4
+    author: dism3mb3r (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              primaryKey: true
+            name: id
+            type: INT UNSIGNED
+        - column:
+            constraints:
+              nullable: false
+            name: user
+            type: INT UNSIGNED
+        - column:
+            constraints:
+              nullable: false
+            name: periodical
+            type: INT UNSIGNED
+        - column:
+            constraints:
+              nullable: false
+            name: invoice
+            type: INT UNSIGNED
+        - column:
+            constraints:
+              nullable: false
+            name: expires
+            type: date
+        tableName: subscription
+- changeSet:
+    id: 1557000272095-5
+    author: dism3mb3r (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              primaryKey: true
+            name: id
+            type: INT UNSIGNED
+        - column:
+            constraints:
+              nullable: false
+            name: name
+            type: TINYTEXT
+        - column:
+            constraints:
+              nullable: false
+            name: email
+            type: VARCHAR(45)
+        - column:
+            constraints:
+              nullable: false
+            name: password
+            type: VARCHAR(45)
+        - column:
+            constraints:
+              nullable: false
+            defaultValue: user
+            name: role
+            type: ENUM('user', 'admin')
+        tableName: user
+- changeSet:
+    id: 1557000272095-6
+    author: dism3mb3r (generated)
+    changes:
+    - createIndex:
+        columns:
+        - column:
+            name: category
+        indexName: category
+        tableName: periodical
+- changeSet:
+    id: 1557000272095-7
+    author: dism3mb3r (generated)
+    changes:
+    - createIndex:
+        columns:
+        - column:
+            name: invoice
+        indexName: invoice
+        tableName: subscription
+- changeSet:
+    id: 1557000272095-8
+    author: dism3mb3r (generated)
+    changes:
+    - createIndex:
+        columns:
+        - column:
+            name: periodical
+        indexName: periodical
+        tableName: subscription
+- changeSet:
+    id: 1557000272095-9
+    author: dism3mb3r (generated)
+    changes:
+    - createIndex:
+        columns:
+        - column:
+            name: user
+        indexName: sos
+        tableName: invoice
+- changeSet:
+    id: 1557000272095-10
+    author: dism3mb3r (generated)
+    changes:
+    - createIndex:
+        columns:
+        - column:
+            name: user
+        indexName: user
+        tableName: subscription
+- changeSet:
+    id: 1557000272095-11
+    author: dism3mb3r (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: category
+        baseTableName: periodical
+        constraintName: periodical_ibfk_1
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: category
+        validate: true
+- changeSet:
+    id: 1557000272095-12
+    author: dism3mb3r (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: user
+        baseTableName: invoice
+        constraintName: sos
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: user
+        validate: true
+- changeSet:
+    id: 1557000272095-13
+    author: dism3mb3r (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: user
+        baseTableName: subscription
+        constraintName: subscription_ibfk_1
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: user
+        validate: true
+- changeSet:
+    id: 1557000272095-14
+    author: dism3mb3r (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: periodical
+        baseTableName: subscription
+        constraintName: subscription_ibfk_2
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: periodical
+        validate: true
+- changeSet:
+    id: 1557000272095-15
+    author: dism3mb3r (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: invoice
+        baseTableName: subscription
+        constraintName: subscription_ibfk_3
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: invoice
+        validate: true
+
